@@ -1,7 +1,7 @@
 <nav class="top-nav">
     <ul>
         <li>
-            <a href="<?php echo URLROOT; ?>/index">Home</a>
+            <a href="<?php echo URLROOT; ?>/index">Pagrindinis</a>
         </li>
         <?php if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == ADMINISTRATOR_ID) : ?>
             <li>

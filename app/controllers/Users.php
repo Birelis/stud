@@ -44,40 +44,40 @@ class Users extends Controller {
             $passwordValidation = "/^(.{0,7}|[^a-z]*|[^\d]*)$/i";
 
             if(empty($data['firstName'])) {
-                $data['firtNameError'] = 'Please enter first name.';
+                $data['firtNameError'] = 'Įveskite vardą.';
             }
             if(empty($data['lastName'])) {
-                $data['lastNameError'] = 'Please enter last name.';
+                $data['lastNameError'] = 'Įveskite pavardę.';
             }
             if (empty($data['username'])) {
-                $data['usernameError'] = 'Please enter username.';
+                $data['usernameError'] = 'Įveskite slapyvardį.';
             } elseif (!preg_match($nameValidation, $data['username'])) {
-                $data['usernameError'] = 'Name can only contain letters and numbers.';
+                $data['usernameError'] = 'Vardas gali turėti tik raides ir skaičius.';
             }
 
             if (empty($data['email'])) {
-                $data['emailError'] = 'Please enter email address.';
+                $data['emailError'] = 'Įveskite El.paštą.';
             } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-                $data['emailError'] = 'Please enter the correct format.';
+                $data['emailError'] = 'Netinkamas El. pašto formatas';
             } else {
                 if ($this->userModel->findUserByEmail($data['email'])) {
-                $data['emailError'] = 'Email is already taken.';
+                $data['emailError'] = 'Paštas užimtas';
                 }
             }
 
             if(empty($data['password'])){
-              $data['passwordError'] = 'Please enter password.';
+              $data['passwordError'] = 'Iveskite slaptažodį';
             } elseif(strlen($data['password']) < 6){
-              $data['passwordError'] = 'Password must be at least 8 characters';
+              $data['passwordError'] = 'Slaptažodis turi susidaryti bent jau iš 8 simbolių.';
             } elseif (preg_match($passwordValidation, $data['password'])) {
-              $data['passwordError'] = 'Password must be have at least one numeric value.';
+              $data['passwordError'] = 'Slaptažodis turi turėti bent vieną skaičių.';
             }
 
              if (empty($data['confirmPassword'])) {
-                $data['confirmPasswordError'] = 'Please enter password.';
+                $data['confirmPasswordError'] = 'Iveskite slaptažodį.';
             } else {
                 if ($data['password'] != $data['confirmPassword']) {
-                $data['confirmPasswordError'] = 'Passwords do not match, please try again.';
+                $data['confirmPasswordError'] = 'Slaptažodžiai nesutampa. Bandykite dar kartą.';
                 }
             }
 
@@ -117,12 +117,12 @@ class Users extends Controller {
             ];
             //Validate username
             if (empty($data['username'])) {
-                $data['usernameError'] = 'Please enter a username.';
+                $data['usernameError'] = 'Iveskite slapyvardį';
             }
 
             //Validate password
             if (empty($data['password'])) {
-                $data['passwordError'] = 'Please enter a password.';
+                $data['passwordError'] = 'Iveskite slaptažodį';
             }
 
             //Check if all errors are empty
@@ -132,7 +132,7 @@ class Users extends Controller {
                 if ($loggedInUser) {
                     $this->createUserSession($loggedInUser);
                 } else {
-                    $data['passwordError'] = 'Password or username is incorrect. Please try again.';
+                    $data['passwordError'] = 'Slaptažodis netinkamas. Bandykite dar kartą';
 
                     $this->view('users/login', $data);
                 }

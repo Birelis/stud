@@ -16,7 +16,7 @@
 
             <button id="submit" type="submit" value="submit">Prisijungti</button>
 
-            <p class="options">Neturite paskyros? <a href="<?php echo URLROOT; ?>/users/register">Susikurikite paskyra!</a></p>
+            <p class="options">Neturite paskyros? <a href="<?php echo URLROOT; ?>/users/register">Susikurkite paskyrą!</a></p>
         </form>
     </div>
 </div>
