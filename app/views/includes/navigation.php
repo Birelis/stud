@@ -5,7 +5,7 @@
         </li>
         <?php if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == ADMINISTRATOR_ID) : ?>
             <li>
-                <a href="<?php echo URLROOT; ?>/adminPanel">Panelė(A)</a>
+                <a href="<?php echo URLROOT; ?>/adminPanel">Panėlė(A)</a>
             </li>
         <?php endif; ?>
         <?php if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == ADMINISTRATOR_ID) : ?>
@@ -15,12 +15,12 @@
         <?php endif; ?>
         <?php if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == LECTURER_ID) : ?>
             <li>
-                <a href="<?php echo URLROOT; ?>/lecturerPanel">Panelė(L)</a>
+                <a href="<?php echo URLROOT; ?>/lecturerPanel">Panėlė(D)</a>
             </li>
         <?php endif; ?>
         <?php if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == STUDENT_ID) : ?>
             <li>
-            <a href="<?php echo URLROOT; ?>/studentPanel">Panelė(S)</a>
+            <a href="<?php echo URLROOT; ?>/studentPanel">Panėlė(S)</a>
         </li>
         <?php endif; ?>
         <li class="btn-login">

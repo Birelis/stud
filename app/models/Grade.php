@@ -47,4 +47,29 @@ class Grade {
         }
 
     }
+
+    public function editGrade($data) {
+        $this->db->query('UPDATE grades SET Grade = :grade WHERE GradeId = :gradeId');
+
+        $this->db->bind(':grade', $data['grade']);
+        $this->db->bind(':gradeId', $data['gradeId']);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteGrade($gradeId) {
+        $this->db->query('DELETE FROM grades WHERE GradeId = :gradeId');
+
+        $this->db->bind(':gradeId', $gradeId);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

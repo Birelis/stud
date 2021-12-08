@@ -15,7 +15,7 @@ class User {
         }
 
         if($type == 'student'){
-            $this->db->query('SELECT * FROM users JOIN groups on users.GroupId = groups.GroupId WHERE UserId = :userId');
+            $this->db->query('SELECT * FROM users LEFT JOIN groups on users.GroupId = groups.GroupId WHERE UserId = :userId');
         }
         else if ($type == 'lecturer') {
             $this->db->query('SELECT * FROM users WHERE UserId = :userId');
@@ -77,6 +77,9 @@ class User {
 
         $row = $this->db->single();
 
+        if(empty($row)) {
+            return false;
+        }
 
         if ($password === $row->password) {
             return $row;
@@ -102,7 +105,7 @@ class User {
         $this->db->query(
         'SELECT * 
         FROM users 
-        JOIN groups on users.GroupId = groups.GroupId
+        LEFT JOIN groups on users.GroupId = groups.GroupId
         WHERE RoleId = :STUDENT_ID
         ');
         $this->db->bind(':STUDENT_ID', STUDENT_ID);
@@ -119,7 +122,7 @@ class User {
     public function setStudent($data) {
         $initials = setInitialData($data);
         
-        $this->db->query('INSERT INTO users (FullName, username, password, email, RoleId, GroupId) values(:fullName, :username, :email, :password, :roleId, :groupId)');
+        $this->db->query('INSERT INTO users (FullName, username, password, email, RoleId, GroupId) values(:fullName, :username, :password, :email, :roleId, :groupId)');
         
         $this->db->bind(':fullName', $initials['FullName']);
         $this->db->bind(':username', $initials['username']);
@@ -146,10 +149,9 @@ class User {
 
     public function setLecturer($data) {
         $initials = setInitialData($data);
+        $this->db->query('INSERT INTO users (FullName, username, email, password, RoleId) values(:fullName, :username, :email, :password, :roleId)');
 
-
-        $this->db->query('INSERT INTO users (username, email, password, RoleId) values(:username, :email, :password, :roleId)');
-
+        $this->db->bind(':fullName', $initials['FullName']);
         $this->db->bind(':username', $initials['username']);
         $this->db->bind(':password', $initials['password']);
         $this->db->bind(':email', $initials['email']);

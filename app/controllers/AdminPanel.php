@@ -12,6 +12,8 @@ class AdminPanel extends Controller {
     }
 
     public function index() {
+
+        // xlog($this->userModel->getUser(20, 'student'));
         $this->view('admin', [
             'userList' => $this->userModel->getStudentList(),
             'lecturersList' => $this->userModel->getLecturerList(),

@@ -6,10 +6,10 @@
     <div class='col-4'>
         <h1>Dalyko studentai</h1> 
         <form action="<?php echo URLROOT; ?>/lecturerPanel/addGrade" method ="POST" class='grade-form d-none'>
+            <input type="hidden" name='lectureId' value='<?php echo $data['lecture']->LectureId ?>'>
+            <input type="hidden" name='userId' value=''>
             <div class='row'>
-                <div class='col-3'><input type="number" min='1' name='lectureId' placeholder="Dalykas(Id)" value='<?php echo $data['lecture']->LectureId ?>' readonly style='background-color: #d5dbd6;'></div>
-                <div class='col-3'><input type="number" min='1' name='userId' placeholder='Studentas(Id)' value='' readonly style='background-color: #d5dbd6;'></div>
-                <div class='col-3'><input type="number" min='1' max='10' placeholder="Pažymys" name='grade'></div>
+                <div class='col-9'><input style="width: 100%" type="number" min='1' max='10' placeholder="Pažymys" name='grade'></div>
                 <div class='col-3'><input type='submit'></div>
             </div>
         </form>

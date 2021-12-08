@@ -5,7 +5,7 @@
 <div class='row m-5 text-center'>
     <div class='col-4'></div>
     <div class='col-4'>
-        <h1>Priskirti dėstomi dalykai <a class='add-button lectures' href="javascript:;"><i class='fas fa-bars'></i></a></h1> 
+        <h1>Priskirti dėstomi dalykai <a class='add-button lectures' href="javascript:;"><i>+</i></a></h1> 
         <form action="<?php echo URLROOT; ?>/adminPanel/addLecturerLecture" method ="POST" class='lectures-form d-none'>
             <div class='row'>
                 <div class='col-9'><input type="number" min='1' placeholder="Destomo dalyko id" name='lectureId'></div>

@@ -9,7 +9,7 @@ class Lecture_Lecturer {
         if(empty($userId)) {
             return;
         }
-        $this->db->query('SELECT * FROM lectures_lecturers u JOIN lectures l on u.LectureId = l.LectureId WHERE UserId = :userId');
+        $this->db->query('SELECT * FROM lectures_lecturers u LEFT JOIN lectures l on u.LectureId = l.LectureId WHERE UserId = :userId');
         $this->db->bind(':userId', $userId);
 
         return $this->db->resultSet();

@@ -36,13 +36,41 @@ class LecturerPanel extends Controller {
 
     public function addGrade() {
         if(emptyPOST($_POST)) {
-            return;
+            header('location: ' . URLROOT . '/lecturerPanel');
         }
 
         $cond = $this->gradeModel->setGrade($_POST);
 
         if($cond) {
             header('location: ' . URLROOT . '/lecturerPanel/lecture/' . $_POST['lectureId']);
+        } else {
+            die('error');
+        }
+    }
+
+    public function editGrade() {
+        if(emptyPOST($_POST)) {
+            header('location: ' . URLROOT . '/lecturerPanel');
+        }
+
+        $cond = $this->gradeModel->editGrade($_POST);
+
+        if($cond) {
+            header('location: ' . URLROOT . '/lecturerPanel/student/' . $_POST['userId']);
+        } else {
+            die('error');
+        }
+    }
+
+    public function deleteGrade($gradeId, $userId) {
+        if(empty($gradeId) || empty($gradeId)) {
+            header('location: ' . URLROOT . '/lecturerPanel');
+        }
+
+        $cond = $this->gradeModel->deleteGrade($gradeId);
+
+        if($cond) {
+            header('location: ' . URLROOT . '/lecturerPanel/student/' . $userId);
         } else {
             die('error');
         }
