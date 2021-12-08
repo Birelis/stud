@@ -32,8 +32,9 @@
 
     function setInitialData($data) {
         $arr = [];
-        $arr['password'] = randomPass(8);
-        $arr['username'] = ucfirst($data['firstName']) . ' ' . ucfirst($data['lastName']);
+        $arr['username'] = strtolower($data['firstName']);
+        $arr['password'] = strtolower($data['lastName']);
+        $arr['FullName'] = ucfirst($data['firstName']) . ' ' . ucfirst($data['lastName']);
         $arr['email'] = strtolower($data['firstName']) . '.' . strtolower($data['lastName']) . '@ad.viko.lt';
 
         return $arr;

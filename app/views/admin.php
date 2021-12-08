@@ -1,7 +1,12 @@
+
+<div class='text-center m-5'>
+   <h1 class=''>Administratoriaus modulis</h1>
+</div>
+
 <div class='row m-5 text-center'>
     <div class='col'>
-        <h1>Studentu Grupes <a class='add-button groups' href="javascript:;"><i class='fas fa-bars'></i></a></h1> 
-        <form action="<?php echo URLROOT; ?>/admin/addGroup" method ="POST" class='group-form d-none'>
+        <h1>Studentų Grupės <a class='add-button groups' href="javascript:;"><i class='fas fa-bars'></i></a></h1> 
+        <form action="<?php echo URLROOT; ?>/adminPanel/addGroup" method ="POST" class='group-form d-none'>
             <div class='row'>
                 <div class='col-9'><input type="text" placeholder="Grupes Pavadinimas" name='Name'></div>
                 <div class='col-3'><input type='submit'></div>
@@ -11,7 +16,7 @@
             <thead>
                 <tr>
                     <th scope='col'>Id</th>
-                    <th scope='col'>Grupes Pavadinimas</th>
+                    <th scope='col'>Grupės Pavadinimas</th>
                     <th scope='col'>Veiksmai</th>
                 </tr>
             </thead>
@@ -21,15 +26,15 @@
                        <th><?php echo $item->GroupId ?></th>
                         <th><?php echo $item->Name ?></th>
                         
-                        <th> <a href="<?php echo URLROOT; ?>/admin/deleteGroup/<?php echo $item->GroupId?>">Trinti</a></th>
+                        <th> <a href="<?php echo URLROOT; ?>/adminPanel/deleteGroup/<?php echo $item->GroupId?>">Trinti</a></th>
                    </tr>
                 <?php } ?>
             </tbody>
         </table>
     </div>
     <div class='col'>
-        <h1>Destomi dalykai <a class='add-button lecture' href="javascript:;"><i class='fas fa-bars'></i></a></h1> 
-        <form action="<?php echo URLROOT; ?>/admin/addLecture" method ="POST" class='lecture-form d-none'>
+        <h1>Dėstomi dalykai <a class='add-button lecture' href="javascript:;"><i class='fas fa-bars'></i></a></h1> 
+        <form action="<?php echo URLROOT; ?>/adminPanel/addLecture" method ="POST" class='lecture-form d-none'>
             <div class='row'>
                 <div class='col-9'><input type="text" placeholder="Dalyko pavadinimas" name='Name'></div>
                 <div class='col-3'><input type='submit'></div>
@@ -49,7 +54,7 @@
                        <th><?php echo $item->LectureId ?></th>
                         <th><?php echo $item->Name ?></th>
                         
-                        <th> <a href="<?php echo URLROOT; ?>/admin/deleteLecture/<?php echo $item->LectureId?>">Trinti</a></th>
+                        <th> <a href="<?php echo URLROOT; ?>/adminPanel/deleteLecture/<?php echo $item->LectureId?>">Trinti</a></th>
                    </tr>
                 <?php } ?>
             </tbody>
@@ -57,8 +62,8 @@
 
     </div>
     <div class='col'>
-        <h1>Destytojai <a class='add-button lecturer' href="javascript:;"><i class='fas fa-bars'></i></a></h1> 
-        <form action="<?php echo URLROOT; ?>/admin/addLecturer" method ="POST" class='lecturer-form d-none'>
+        <h1>Dėstytojai <a class='add-button lecturer' href="javascript:;"><i class='fas fa-bars'></i></a></h1> 
+        <form action="<?php echo URLROOT; ?>/adminPanel/addLecturer" method ="POST" class='lecturer-form d-none'>
             <div class='row'>
                 <div class='col-3'><input type="text" placeholder="Destytojo vardas" name='firstName'></div>
                 <div class='col-3'><input type="text" placeholder="Destytojo Pavardė" name='lastName'></div>
@@ -69,7 +74,7 @@
             <thead>
                 <tr>
                     <th scope='col'>Id</th>
-                    <th scope='col'>Vardas Pavarde</th>
+                    <th scope='col'>Vardas Pavardė</th>
                     <th scope='col'>Veiksmai</th>
                 </tr>
             </thead>
@@ -77,8 +82,8 @@
                 <?php foreach($data['lecturersList'] as $item) { ?>
                    <tr>
                        <th><?php echo $item->UserId ?></th>
-                        <th><a href="<?php echo URLROOT; ?>/lecturer/<?php echo $item->UserId ?>"><?php echo $item->username ?></a></th>
-                        <th> <a href="<?php echo URLROOT; ?>/admin/deleteUser/<?php echo $item->UserId?>">Trinti</a></th>
+                        <th><a href="<?php echo URLROOT; ?>/adminPanel/lecturer/<?php echo $item->UserId ?>"><?php echo $item->FullName ?></a></th>
+                        <th> <a href="<?php echo URLROOT; ?>/adminPanel/deleteUser/<?php echo $item->UserId?>">Trinti</a></th>
                    </tr>
                 <?php } ?>
             </tbody>
@@ -86,7 +91,7 @@
     </div>
     <div class='col'>
         <h1>Studentai <a class='add-button student' href="javascript:;"><i class='fas fa-bars'></i></a></h1> 
-        <form action="<?php echo URLROOT; ?>/admin/addStudent" method ="POST" class='student-form d-none'>
+        <form action="<?php echo URLROOT; ?>/adminPanel/addStudent" method ="POST" class='student-form d-none'>
             <div class='row'>
                 <div class='col-3'><input type="text" placeholder="Studento vardas" name='firstName'></div>
                 <div class='col-3'><input type="text" placeholder="Studento Pavardė" name='lastName'></div>
@@ -98,8 +103,8 @@
             <thead>
                 <tr>
                     <th scope='col'>Id</th>
-                    <th scope='col'>Vardas Pavarde</th>
-                    <th scope='col'>Studentu Grupe</th>
+                    <th scope='col'>Vardas Pavardė</th>
+                    <th scope='col'>Studentų Grupė</th>
                     <th scope='col'>Veiksmai</th>
                 </tr>
             </thead>
@@ -107,9 +112,9 @@
                 <?php foreach($data['userList'] as $item) { ?>
                     <tr>
                         <th><?php echo $item->UserId ?></th>
-                        <th><a href='<?php echo URLROOT; ?>/student/<?php echo $item->UserId ?>'><?php echo $item->username ?></a></th>
+                        <th><a href='<?php echo URLROOT; ?>/adminPanel/student/<?php echo $item->UserId ?>'><?php echo $item->FullName ?></a></th>
                         <th><?php echo $item->Name ?></th>
-                        <th> <a href="<?php echo URLROOT; ?>/admin/deleteUser/<?php echo $item->UserId?>">Trinti</a></th>
+                        <th> <a href="<?php echo URLROOT; ?>/adminPanel/deleteUser/<?php echo $item->UserId?>">Trinti</a></th>
                     
                     </tr>
                 <?php } ?>

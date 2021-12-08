@@ -1,18 +1,26 @@
 <?php
+
 class User {
     private $db;
     public function __construct() {
         $this->db = new Database;
+
     }
 
 
-    public function getUser($userId) {
+    public function getUser($userId, $type = 'student') {
 
         if(empty($userId)) {
             return;
         }
 
-        $this->db->query('SELECT * FROM users JOIN groups on users.GroupId = groups.GroupId WHERE UserId = :userId');
+        if($type == 'student'){
+            $this->db->query('SELECT * FROM users JOIN groups on users.GroupId = groups.GroupId WHERE UserId = :userId');
+        }
+        else if ($type == 'lecturer') {
+            $this->db->query('SELECT * FROM users WHERE UserId = :userId');
+        }
+
 
         $this->db->bind(':userId', $userId);
 
@@ -31,15 +39,30 @@ class User {
         }
     }
 
-    public function register($data) {
-        $this->db->query('INSERT INTO users (username, email, password) VALUES(:username, :email, :password)');
+    public function setRole($userId, $roleId) {
 
-        //Bind values
+        $this->db->query('UPDATE users SET RoleId = :roleId WHERE UserId = :userId');
+
+        $this->db->bind(':roleId', $roleId);
+
+        $this->db->bind(':userId', $userId);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function register($data) {
+        $FullName = ucfirst($data['firstName']) . ' ' . ucfirst($data['lastName']);
+        $this->db->query('INSERT INTO users (FullName, username, email, password) VALUES(:fullName, :username, :email, :password)');
+
         $this->db->bind(':username', $data['username']);
+        $this->db->bind(':fullName', $FullName);
         $this->db->bind(':email', $data['email']);
         $this->db->bind(':password', $data['password']);
 
-        //Execute function
         if ($this->db->execute()) {
             return true;
         } else {
@@ -50,7 +73,6 @@ class User {
     public function login($username, $password) {
         $this->db->query('SELECT * FROM users WHERE username = :username');
 
-        //Bind value
         $this->db->bind(':username', $username);
 
         $row = $this->db->single();
@@ -63,15 +85,11 @@ class User {
         }
     }
 
-    //Find user by email. Email is passed in by the Controller.
     public function findUserByEmail($email) {
-        //Prepared statement
         $this->db->query('SELECT * FROM users WHERE email = :email');
 
-        //Email param will be binded with the email variable
         $this->db->bind(':email', $email);
 
-        //Check if email is already registered
         if($this->db->rowCount() > 0) {
             return true;
         } else {
@@ -88,7 +106,12 @@ class User {
         WHERE RoleId = :STUDENT_ID
         ');
         $this->db->bind(':STUDENT_ID', STUDENT_ID);
+        
+        return $this->db->resultSet();
+    }
 
+    public function getUnverifiedUserList() {
+        $this->db->query('SELECT * FROM users WHERE RoleId is null');
         return $this->db->resultSet();
     }
 
@@ -96,8 +119,9 @@ class User {
     public function setStudent($data) {
         $initials = setInitialData($data);
         
-        $this->db->query('INSERT INTO users (username, password, email, RoleId, GroupId) values(:username, :email, :password, :roleId, :groupId)');
+        $this->db->query('INSERT INTO users (FullName, username, password, email, RoleId, GroupId) values(:fullName, :username, :email, :password, :roleId, :groupId)');
         
+        $this->db->bind(':fullName', $initials['FullName']);
         $this->db->bind(':username', $initials['username']);
         $this->db->bind(':password', $initials['password']);
         $this->db->bind(':email', $initials['email']);

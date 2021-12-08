@@ -5,6 +5,14 @@ class Lecture {
         $this->db = new Database;
     }
 
+    public function getLectureById($lectureId) {
+        $this->db->query('SELECT * FROM lectures WHERE LectureId = :lectureId');
+
+        $this->db->bind(':lectureId', $lectureId);
+
+        return $this->db->single();
+    }
+
     public function getLectureList() {
         $this->db->query('SELECT * FROM lectures');
 

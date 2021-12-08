@@ -51,4 +51,24 @@ class Lecture_User {
         }
 
     }
+
+    public function deleteUserLectures($userId) {
+        $this->db->query('DELETE FROM lectures_users WHERE UserId = :userId');
+
+        $this->db->bind(':userId', $userId);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function getLectureUsers($lectureId) {
+        $this->db->query('SELECT * FROM lectures_users l JOIN users u ON l.UserId = u.UserId  WHERE LectureId = :lectureId');
+
+        $this->db->bind(':lectureId', $lectureId);
+
+        return $this->db->resultSet();
+    }
 }

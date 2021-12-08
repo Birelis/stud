@@ -6,12 +6,16 @@ class Users extends Controller {
 
     public function register() {
         $data = [
+            'firstName' => '',
+            'lastName' => '',
             'username' => '',
             'email' => '',
             'password' => '',
             'confirmPassword' => '',
             'usernameError' => '',
             'emailError' => '',
+            'firstNameError' => '',
+            'lastNameError' => '',
             'passwordError' => '',
             'confirmPasswordError' => ''
         ];
@@ -22,11 +26,15 @@ class Users extends Controller {
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
               $data = [
+                'firstName' => trim($_POST['firstName']),
+                'lastName' => trim($_POST['lastName']),
                 'username' => trim($_POST['username']),
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
                 'confirmPassword' => trim($_POST['confirmPassword']),
                 'usernameError' => '',
+                'firstNameError' => '',
+                'lastNameError' => '',
                 'emailError' => '',
                 'passwordError' => '',
                 'confirmPasswordError' => ''
@@ -35,26 +43,28 @@ class Users extends Controller {
             $nameValidation = "/^[a-zA-Z0-9]*$/";
             $passwordValidation = "/^(.{0,7}|[^a-z]*|[^\d]*)$/i";
 
-            //Validate username on letters/numbers
+            if(empty($data['firstName'])) {
+                $data['firtNameError'] = 'Please enter first name.';
+            }
+            if(empty($data['lastName'])) {
+                $data['lastNameError'] = 'Please enter last name.';
+            }
             if (empty($data['username'])) {
                 $data['usernameError'] = 'Please enter username.';
             } elseif (!preg_match($nameValidation, $data['username'])) {
                 $data['usernameError'] = 'Name can only contain letters and numbers.';
             }
 
-            //Validate email
             if (empty($data['email'])) {
                 $data['emailError'] = 'Please enter email address.';
             } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
                 $data['emailError'] = 'Please enter the correct format.';
             } else {
-                //Check if email exists.
                 if ($this->userModel->findUserByEmail($data['email'])) {
                 $data['emailError'] = 'Email is already taken.';
                 }
             }
 
-           // Validate password on length, numeric values,
             if(empty($data['password'])){
               $data['passwordError'] = 'Please enter password.';
             } elseif(strlen($data['password']) < 6){
@@ -63,7 +73,6 @@ class Users extends Controller {
               $data['passwordError'] = 'Password must be have at least one numeric value.';
             }
 
-            //Validate confirm password
              if (empty($data['confirmPassword'])) {
                 $data['confirmPasswordError'] = 'Please enter password.';
             } else {
@@ -72,15 +81,11 @@ class Users extends Controller {
                 }
             }
 
-            // Make sure that errors are empty
-            if (empty($data['usernameError']) && empty($data['emailError']) && empty($data['passwordError']) && empty($data['confirmPasswordError'])) {
+            if (empty($data['usernameError']) && empty($data['emailError']) && empty($data['passwordError']) && empty($data['confirmPasswordError'] && empty($data['firstNameError']) && empty($data['lastNameError']))) {
 
                 // Hash password
                 // $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
-                //Register user from model function
                 if ($this->userModel->register($data)) {
-                    //Redirect to the login page
                     header('location: ' . URLROOT . '/users/login');
                 } else {
                     die('Something went wrong.');
