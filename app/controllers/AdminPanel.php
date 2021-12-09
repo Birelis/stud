@@ -28,14 +28,29 @@ class AdminPanel extends Controller {
             header('location: ' . URLROOT . '/adminPanel');
         }
 
-        $condition = $this->userModel->setStudent($_POST);
+        $cond = $this->userModel->setStudent($_POST);
         
-        if($condition) {
+        if($cond) {
             header('location: ' . URLROOT . '/adminPanel');
         } else {
             die('erorr');
         }
     }
+
+    public function editStudentGroup() {
+        if(emptyPOST($_POST)) {
+            header('location: ' . URLROOT . '/adminPanel');   
+        }
+
+        $cond = $this->userModel->changeStudentGroup($_POST);
+
+        if($cond) {
+            header('location: ' . URLROOT . '/adminPanel');
+        } else {
+            die('erorr');
+        }
+    }
+
     public function deleteUser($userId) {
         if(empty($userId)) {
             header('location: ' . URLROOT . '/adminPanel');

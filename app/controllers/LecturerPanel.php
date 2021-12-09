@@ -24,13 +24,13 @@ class LecturerPanel extends Controller {
         ]);
     }
 
-    public function student($userId) {
-        if(empty($userId)) {
+    public function student($userId, $lectureId) {
+        if(empty($userId) || empty($lectureId)) {
             header('location: ' . URLROOT . '/lecturerPanel');
         }
         $this->view('lecturer_items/student', [
             'student' => $this->userModel->getUser($userId),
-            'gradeList' => $this->gradeModel->getUserGradeList($userId)
+            'gradeList' => $this->gradeModel->getUserLectureGrades($lectureId, $userId)
         ]);
     }
 

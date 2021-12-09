@@ -1,5 +1,5 @@
 <div class='text-center m-5'>
-   <h1>Dalykas: <?php echo $data['student']->FullName ?></h1>
+   <h1>Studentas: <?php echo $data['student']->FullName ?></h1>
 </div>
 <div class='row m-5 text-center'>
     <div class="col-4"></div>

@@ -99,6 +99,13 @@
                 <div class='col-3'><input type='submit'></div>
             </div>
         </form>
+        <form action="<?php echo URLROOT; ?>/adminPanel/editStudentGroup" method ="POST" class='change-group-form d-none'>
+            <input type="hidden" value="" name='userId' class='change-group-userid'>
+            <div class='row'>
+                <div class='col-9'><input style="width: 100%" type="number" min='1' placeholder="Nauja studentų grupė(id)" name='groupId'></div>
+                <div class='col-3'><input type='submit'></div>
+            </div>
+        </form>
         <table class='table table-bordered  text-center'>
             <thead>
                 <tr>
@@ -115,7 +122,10 @@
                         <th><?php echo $item->UserId ?></th>
                         <th><a href='<?php echo URLROOT; ?>/adminPanel/student/<?php echo $item->UserId ?>'><?php echo $item->FullName ?></a></th>
                         <th><?php echo $item->Name ?></th>
-                        <th> <a href="<?php echo URLROOT; ?>/adminPanel/deleteUser/<?php echo $item->UserId?>">Trinti</a></th>
+                        <th> 
+                            <a href="<?php echo URLROOT; ?>/adminPanel/deleteUser/<?php echo $item->UserId?>">Trinti |</a> 
+                            <a data-id="<?php echo $item->UserId ?>" href="javascript:;" class='add-button change-something'>Keisti grupę</a>
+                    </th>
                     
                     </tr>
                 <?php } ?>
@@ -136,11 +146,15 @@
             else if(a.className.includes('lecturer')) form = document.querySelector('.lecturer-form')
             else if(a.className.includes('group')) form = document.querySelector('.group-form')
             else if(a.className.includes('lecture')) form = document.querySelector('.lecture-form')
-
-
+            else if(a.className.includes('change-something')) form = document.querySelector('.change-group-form')
 
             if(form.classList.contains('d-none')) {
                 form.classList.remove('d-none');
+
+                if(a.className.includes('change-something')){
+                    let userInput = document.querySelector('.change-group-userid');
+                    userInput.value = a.getAttribute('data-id');
+                }
             }
             else {
                 form.classList.add('d-none');

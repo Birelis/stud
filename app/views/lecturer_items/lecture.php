@@ -25,7 +25,7 @@
                 <?php foreach($data['studentList'] as $item) { ?>
                    <tr>
                        <th><?php echo $item->LectureUserId ?></th>
-                        <th><a href='<?php echo URLROOT; ?>/lecturerPanel/student/<?php echo $item->UserId ?>'><?php echo $item->FullName ?></a></th>
+                        <th><a href='<?php echo URLROOT; ?>/lecturerPanel/student/<?php echo $item->UserId ?>/<?php echo $data['lecture']->LectureId?>'><?php echo $item->FullName ?></a></th>
                         <th><a href="javascript:;" class='add-button grade' data-id="<?php echo $item->UserId ?>">Pridėti pažymį</a></th>
                    </tr>
                 <?php } ?>

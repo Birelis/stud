@@ -139,6 +139,18 @@ class User {
         
     }
 
+    public function changeStudentGroup($data) {
+        $this->db->query('UPDATE users SET GroupId = :groupId WHERE UserId = :userId');
+        $this->db->bind(':groupId', $data['groupId']);
+        $this->db->bind(':userId', $data['userId']);
+        
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Destytojai
     public function getLecturerList() {
         $this->db->query('SELECT * FROM users WHERE RoleId = :LECTURER_ID');
